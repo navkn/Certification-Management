@@ -29,11 +29,12 @@
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
                         <lightning-input label="Voucher Validity" value={VouVal} type="date" required
-                            min={yesterdayDate} message-when-range-underflow="Enter atleast Today's date"
+                            min={yesterdayDate} message-when-range-underflow="Enter atleast Today's date" 
+                            message-when-value-missing="Please enter the date"
                             onblur={VouValChange}>
                         </lightning-input>
                         <lightning-input label="Voucher Cost" value={VouCost} type="number" formatter="currency"
-                            required onchange={VouCostChange}>
+                            required message-when-value-missing="Please enter the cost" onchange={VouCostChange}>
                         </lightning-input>
                         <c-certlookupcomponent object-name="Certification__c" field-name="Name" label="Certification"
                             parentidfield="Certification__c" onselect={handleAutoSelect} iconname="standard:account">

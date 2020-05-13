@@ -6,7 +6,8 @@
         <lightning-card title="Edit Certification" class="slds-m-around_medium">
 
           <lightning-input class="slds-m-horizontal_small" label="Certificate Cost"
-            value={certCost} type="Currency" required onchange={CertCostChange}>
+            value={certCost} type="Currency" required message-when-value-missing="Please enter the cost"
+            onchange={CertCostChange}>
           </lightning-input>
           <lightning-input class="slds-m-horizontal_small" label="Certification Id"
             value={certID} type="String" required read-only="true"></lightning-input>

@@ -1,7 +1,68 @@
 <template>
-    <div>
-        <lightning-datatable
-        
-        ></lightning-datatable>
+    <div class="slds-page-header">
+        <lightning-card>
+            <h4 slot="title" class="text">
+                <lightning-icon icon-name="custom:custom49" class="slds-m-right_medium" size="medium">
+
+                </lightning-icon>
+                Employees
+            </h4>
+            <lightning-button if:true={isAddAble} slot="actions" label="New Employee" onclick={addEmp}>
+            </lightning-button>
+        </lightning-card>
     </div>
+
+    <template if:true={isAddAble}>
+        <div if:true={empflag}>
+            <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content"
+                aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+              </button> -->
+                        <p>New Employee form</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+
+                        <lightning-input label="Employee Name" value={EmpName} type="String" required message-when-value-missing="Please enter the value"
+                            onchange={EmpNameChange}>
+                        </lightning-input>
+                        <lightning-input label="Employee Id" value={EmpId} type="Number" required message-when-value-missing="Please enter the value"
+                            onchange={EmpIdChange}>
+                        </lightning-input>
+                        <lightning-input label="Employee Email" value={EmpMail} type="Email" required message-when-value-missing="Please enter the value"
+                            onchange={EmpMailChange}>
+                        </lightning-input>
+                        <lightning-input label="Company Name" value={EmpCompany} type="String" required message-when-value-missing="Please enter the value"
+                            onchange={EmpCompanyChange}>
+                        </lightning-input>
+                        <lightning-input label="Primary Skill" value={EmpPS} type="String" required message-when-value-missing="Please enter the value"
+                            onchange={EmpPSChange}>
+                        </lightning-input>
+                        <lightning-input label="Secondary Skill" value={EmpSS} type="String"  
+                        onchange={EmpSSChange}>
+                        </lightning-input>
+                        <lightning-input label="Employee Experience" value={EmpExp} type="Number" 
+                            onchange={EmpExpChange}>
+                        </lightning-input>
+                        <lightning-input label="Comments" value={EmpComm} type="String" onchange={EmpCommChange}>
+                        </lightning-input>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closepopup}>
+                            Cancel
+                        </button>
+                        <button class="slds-button slds-button_brand" onclick={addNewEmployee}>
+                            Add
+                        </button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
 </template>

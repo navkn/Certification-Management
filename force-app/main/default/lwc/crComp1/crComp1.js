@@ -63,22 +63,45 @@ export default class CrComp1 extends LightningElement {
     }
     addreq() {
         //var newReq={ ReqEmp: this.EmpRecordId, ReqCert: this.CertRecordId, ReqDueDate: this.ReqDueDate, ReqComm: this.ReqComm,ReqStatus:'' };
-        addrequest({
-            ReqEmp: this.EmpRecordId,
-            ReqCert: this.CertRecordId,
-            ReqDueDate: this.ReqDueDate
-        }).then((result) => {
-            if (result == "Request Added Successfully") {
-                var payLoad = {type:'All' };
-                fireEvent(this.pageRef, "refreshrequests", payLoad);
 
-                this.closepopup();
-                this.notify('New Request Added Successfully', '', 'success');
-            } else {
-                //alert(result);
-                this.notify('Failed to Add a New Request', result, 'error');
-            };
-        });
+        const allValid = [...this.template.querySelectorAll('lightning-input')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        if (allValid) {
+            if (this.CertRecordId != undefined || this.CertRecordId != null) {
+                if (this.EmpRecordId != undefined || this.EmpRecordId != null) {
+                    addrequest({
+                        ReqEmp: this.EmpRecordId,
+                        ReqCert: this.CertRecordId,
+                        ReqDueDate: this.ReqDueDate
+                    }).then((result) => {
+                        if (result == "Request Added Successfully") {
+                            var payLoad = { type: 'All' };
+                            fireEvent(this.pageRef, "refreshrequests", payLoad);
+
+                            this.closepopup();
+                            this.notify('New Request Added Successfully', '', 'success');
+                        } else {
+                            //alert(result);
+                            this.notify('Failed to Add a New Request', result, 'error');
+                        };
+                    });
+                }
+                else {
+                    //alert('Please select an Employee');
+                    this.notify('Please select an Employee', '', 'error');
+                }
+            }
+            else {
+                //alert('Please select a certification');
+                this.notify('Please select a certification', '', 'error');
+            }
+        }
+        else {
+            alert('Please review all errors');
+        }
 
     }
 

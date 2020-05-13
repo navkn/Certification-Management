@@ -44,26 +44,45 @@ export default class CertificationsComp3 extends LightningElement {
         if (heavyLoad.action == 'edit') {
             this.isEdit = true;
         }
+         //autoscroll
+         var scrollOptions = {
+            left: 0,
+            top: 0,
+            behavior: 'smooth'
+        }
+        window.scrollTo(scrollOptions);
     }
 
     handleCancel(event) {
         this.isEdit = false;
     }
     handleUpdate(event) {
-        console.log(this.certCost);
-        console.log(this.recordId);
-        updCert({ recId: this.recordId, certCost: this.certCost }).then((result) => {
-            if (result == "Certification updated Successfully") {
-                //refreshApex(this.valueOfViewCertifications);
-                var payload = {};
-                fireEvent(this.pageRef, 'refreshcertificates', payload);
-                this.handleCancel(payload);
-                this.notify('Certification updated Successfully', '', 'success');
-            } else {
-                this.notify('Failed to update certificate', result, 'error');
-            };
-        });
+        // console.log(this.certCost);
+        // console.log(this.recordId);
+        const allValid = [...this.template.querySelectorAll('lightning-input')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        if (allValid) {
+
+            updCert({ recId: this.recordId, certCost: this.certCost }).then((result) => {
+                if (result == "Certification updated Successfully") {
+                    //refreshApex(this.valueOfViewCertifications);
+                    var payload = {};
+                    fireEvent(this.pageRef, 'refreshcertificates', payload);
+                    this.handleCancel(payload);
+                    this.notify('Certification updated Successfully', '', 'success');
+                } else {
+                    this.notify('Failed to update certificate', result, 'error');
+                };
+            });
+        } else {
+            //alert('Please review errors');
+            this.notify('Please review errors','','error');
+        }
     }
+
     @track certName;
     @track certID;
     @track certCost;

@@ -72,7 +72,7 @@ export default class CrComp3 extends LightningElement {
         // alert('scrolled');
 
         var scrollOptions = {
-            //left: 0,
+            left: 0,
             top: 0,
             behavior: 'smooth'
         }

@@ -1,7 +1,4 @@
 <template>
-
-
-
     <div class="slds-page-header">
         <lightning-card>
             <h4 slot="title" class="text">
@@ -30,10 +27,10 @@
                         <p>New Certification form</p>
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
-                        <lightning-input label="Certification Name" value={CertName} type="String" required
+                        <lightning-input label="Certification Name" value={CertName} type="String" required message-when-value-missing="Please enter the name"
                             onchange={CertNameChange}>
                         </lightning-input>
-                        <lightning-input label="Certification Cost" value={CertCost} type="Number" required
+                        <lightning-input label="Certification Cost" value={CertCost} type="Number" required message-when-value-missing="Please enter the cost"
                             onchange={CertCostChange}>
                         </lightning-input>
                     </div>

@@ -166,8 +166,8 @@ public with sharing class CertificationManagementComponentsHandle {
 
     //code for adding new employee record
     @AuraEnabled
-    public static String addNewEmp(String EmpName,Decimal EmpId,String EmpMail,String EmpPS,String EmpSS,Decimal EmpExp,String EmpComm){
-        Employee__c newemp = new Employee__c(Name=EmpName, Employee_ID__c=EmpId, Employee_email__c=EmpMail,Primary_Skill__c=EmpPS, Secondary_Skill__c=EmpSS, Experience__c=EmpExp, Comments__c=EmpComm);
+    public static String addNewEmp(String EmpName,String EmpComp,Decimal EmpId,String EmpMail,String EmpPS,String EmpSS,Decimal EmpExp,String EmpComm){
+        Employee__c newemp = new Employee__c(Name=EmpName, Employee_ID__c=EmpId, Employee_email__c=EmpMail,Primary_Skill__c=EmpPS, Secondary_Skill__c=EmpSS, Experience__c=EmpExp, Comments__c=EmpComm,	Company_Name__c=EmpComp);
         
         try {insert newemp; }
         catch(Exception e){
@@ -234,6 +234,16 @@ public with sharing class CertificationManagementComponentsHandle {
             return recId;
        } 
        return 'Request deleted Successfully';     
+    }
+
+    @AuraEnabled
+    public static String delEmp(String recId){
+        Employee__c delEmp = new Employee__c(Id=recId);
+        try {delete delEmp; }
+        catch(Exception e){
+            return recId;
+       } 
+       return 'Employee deleted Successfully';     
     }
 
     //getting user profile

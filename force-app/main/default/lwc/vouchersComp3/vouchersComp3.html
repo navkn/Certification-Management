@@ -64,8 +64,8 @@
                     <div class="slds-m-horizontal_small">
                         <p>Voucher Active : {isActive}</p>
                     </div>
-                    <div slot="footer">
-                        <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Edit" variant="brand"
+                    <div slot="footer" if:true={isEditable}>
+                        <lightning-button if:true={isActive} class="slds-m-around_medium" label="Edit" variant="brand"
                             onclick={handleEditClicked}></lightning-button>
                     </div>
 
@@ -90,20 +90,9 @@
                 <lightning-input class="slds-m-horizontal_small" label="Voucher Certification" value={vouCert} required
                     onchange={VouCertChange} read-only="true">
                 </lightning-input>
-
-                <!-- <lightning-input class="slds-m-horizontal_small" label="Voucher Active" value={isActive} required
-                    read-only="true">
-                </lightning-input> -->
                 <div class="slds-m-horizontal_small">
                     <p>Voucher Active : {isActive}</p>
                 </div>
-
-                <div slot="footer">
-                    <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Edit" variant="brand"
-                        onclick={handleEditClicked}></lightning-button>
-                </div>
-
-
             </lightning-card>
         </div>
 

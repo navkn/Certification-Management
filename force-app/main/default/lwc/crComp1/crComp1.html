@@ -48,6 +48,7 @@
                             parentidfield="Certification__c" onselect={handleAutoSelect} iconname="standard:drafts">
                         </c-certlookupcomponent>
                         <lightning-input label="Request Due Date" type="date" required min={yesterdayDate}
+                            message-when-value-missing="Please enter the date"
                             message-when-range-underflow="Enter atleast Today's date" onblur={ReqDueDateChange}>
                         </lightning-input>
 

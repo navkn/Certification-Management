@@ -1,0 +1,131 @@
+<template>
+
+    <div if:true={showEmployees}>
+        <div class="slds-scrollable">
+
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                <thead class="slds-text-title--caps slds-m-around_medium" style="font-size:medium">
+                    <tr>
+                        <th title="Employee Name" class="slds-truncate">Employee Name</th>
+                        <th title="Employee ID" class="slds-truncate">Employee ID</th>
+                        <th title="Employee EmailId" class="slds-truncate">Employee EmailID</th>
+                        <th title="Company" class="slds-truncate">Company</th>
+                        <th title="Primary Skill" class="slds-truncate">Primary Skill</th>
+                        <th title="Sec Skill" class="slds-truncate">Sec Skill</th>
+                        <th title="Experience" class="slds-truncate">Experience</th>
+                        <th title="Comments" class="slds-truncate">Comments</th>
+                        <th title="Action Set" class="slds-truncate" if:true={isUpdateAble}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size:small">
+
+                    <template for:each={employees} for:item="employee" for:index='i'>
+
+                        <tr key={employee}>
+
+                            <td data-label="Employee Name" onclick={viewForm}>{employee.Name}</td>
+                            <td data-label="Employee ID" onclick={viewForm}>{employee.Employee_ID__c}
+                            </td>
+                            <td data-label="Employee EmailId" onclick={viewForm}>
+                                {employee.Employee_email__c}
+                            </td>
+                            <td data-label="Company" onclick={viewForm}>
+                                {employee.Company_Name__c}
+                            </td>
+                            <td data-label="Primary Skill" onclick={viewForm}>
+                                {employee.Primary_Skill__c}
+                            </td>
+                            <td data-label="Sec Skill" onclick={viewForm}>
+                                {employee.Secondary_Skill__c}
+                            </td>
+                            <td data-label="Experience" onclick={viewForm}>
+                                {employee.Experience__c}
+                            </td>
+                            <td data-label="Comments" onclick={viewForm}>
+                                {employee.Comments__c}
+                            </td>
+
+                            <td data-label="Action Set" if:true={isUpdateAble}>
+
+                                <lightning-button label="Edit" onclick={editForm} data-key={employee.Id} variant="brand"
+                                    class="slds-m-around_medium" value={i}>
+                                </lightning-button>
+                                <lightning-button label="Delete" onclick={deleteEmployeeForm} data-key={employee.Id}
+                                    variant="destructive" value={i}></lightning-button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </template>
+
+
+                </tbody>
+            </table>
+            <div if:true={editEmployee}>
+                <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content"
+                    aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header slds-modal__header_empty">
+                            <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                  </button> -->
+                            <p>Edit Employee</p>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                            <lightning-record-edit-form object-api-name="Employee__c" record-id={recordId}
+                                onsubmit={handleSubmit} onsuccess={handleSuccess}>
+
+                                <lightning-messages></lightning-messages>
+                                <lightning-input-field field-name="Name" required>
+                                </lightning-input-field>
+
+                                <lightning-input-field field-name="Employee_ID__c" required>
+                                </lightning-input-field>
+
+                                <lightning-input-field field-name="Employee_email__c" required>
+                                </lightning-input-field>
+                                <lightning-input-field field-name="Company_Name__c" required>
+                                </lightning-input-field>
+                                <lightning-input-field field-name="Primary_Skill__c">
+                                </lightning-input-field>
+                                <lightning-input-field field-name="Secondary_Skill__c">
+                                </lightning-input-field>
+                                <lightning-input-field field-name="Experience__c">
+                                </lightning-input-field>
+                                <lightning-input-field field-name="Comments__c">
+                                </lightning-input-field>
+                                <div>
+
+                                    <lightning-button class="slds-m-around_small" type="submit" label="Update record"
+                                        variant="brand">
+                                    </lightning-button>
+                                    <lightning-button label="Cancel" onclick={closepopup}>
+
+                                    </lightning-button>
+                                </div>
+                            </lightning-record-edit-form>
+                        </div>
+
+                    </div>
+
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </div>
+    </div>
+    <div if:false={showEmployees}>
+        <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+            <lightning-spinner alternative-text="Loading" size="medium" variant="inverse">
+            </lightning-spinner>
+        </div>
+    </div>
+
+
+</template>

@@ -120,7 +120,6 @@ export default class AdminComp1 extends LightningElement {
         }
         else {
             this.showCert = true;
-            //refreshApex(this.valueOfViewCertifications);
         }
     }
 
@@ -132,7 +131,6 @@ export default class AdminComp1 extends LightningElement {
         }
         else {
             this.showVou = true;
-            //refreshApex(this.valueOfViewCertifications);
         }
     }
 
@@ -141,22 +139,18 @@ export default class AdminComp1 extends LightningElement {
 
     CertNameChange(event) {
         this.CertName = event.target.value;
-        //console.log(this.CertName);
     }
     CertCostChange(event) {
         this.CertCost = event.target.value;
-        //console.log(this.CertCost);
     }
 
 
     VouCostChange(event) {
         this.VouCost = event.target.value;
-        //console.log(this.VouCost);
     }
     VouValidChange(event) {
         this.VouValid = event.target.value;
-        //console.log(this.VouValid);
-        //this.openlookup = true;
+        
     }
 
     handleAutoSelect(event) {
@@ -165,10 +159,6 @@ export default class AdminComp1 extends LightningElement {
         this.CertRecordId = nav.selectedRecordId;
     }
 
-    // empform() {
-    //     this.empflag = true;
-    // }
-
     certform() {
         this.certflag = true;
     }
@@ -176,12 +166,6 @@ export default class AdminComp1 extends LightningElement {
     vouform() {
         this.vouflag = true;
     }
-
-
-    // addemp() {
-    //     addemployee({ EmpName: this.EmpName, EmpId: this.EmpId, EmpMail: this.EmpMail, EmpPS: this.EmpPS, EmpSS: this.EmpSS, EmpExp: this.EmpExp, EmpComm: this.EmpComm }).then(result => { if (result == 'Employee Created Successfully') { alert(result); this.closepopup(); refreshApex(this.valueOfViewEmployees); } else alert(result); });
-    //     this.empflag = false;
-    // }
 
     addcert() {
         console.log(this.CertName);
@@ -201,7 +185,7 @@ export default class AdminComp1 extends LightningElement {
     }
 
     addvou() {
-        //alert(this.VouCert);alert(this.VouValid);alert(this.VouCost);alert(this.CertRecordId);
+        
         addvoucher({ VouCost: this.VouCost, VouValid: this.VouValid, VouCert: this.CertRecordId })
             .then(result => {
                 if (result == 'Voucher Added Successfully') {
@@ -221,7 +205,6 @@ export default class AdminComp1 extends LightningElement {
     }
 
     closepopup() {
-        // this.empflag = false;
         this.certflag = false;
         this.vouflag = false;
         this.viewvouflag = false;

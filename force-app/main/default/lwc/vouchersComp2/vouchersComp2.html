@@ -1,31 +1,10 @@
 <template>
     <div if:false={firstTime}>
-        <!-- <div if:true={$Browser.isPhone}>
-            <p>hello</p>
-        </div>
-        <div if:false={$Browser.isPhone}>
-            <p>windows</p>
-        </div> -->
-
         <div if:true={showVouchers}>
             <div class="slds-scrollable">
                 <table class="slds-table slds-table--bordered">
                     <thead class="slds-text-title--caps slds-m-around_medium">
                         <tr>
-                            <!-- <div class="slds-grid">
-                        <div class="slds-col slds-size_1-of-6">
-                            Voucher Code
-                        </div>
-                        <div class="slds-col slds-size_1-of-6">
-                            Active
-                        </div>
-                        <div class="slds-col slds-size_2-of-6">
-                            Certification
-                        </div>
-                        <div class="slds-col slds-size_2-of-6">
-                            Actions
-                        </div>
-                    </div> -->
                             <th title="Voucher Validity" class="slds-truncate"> Validity</th>
                             <th title="Voucher Code" class="slds-truncate">Voucher Code</th>
                             <th title="Voucher Cost" class="slds-truncate">Voucher Cost</th>
@@ -54,6 +33,9 @@
                                             data-key={voucher.Id} variant="brand" class="slds-m-around_medium"
                                             value={i}>
                                         </lightning-button>
+                                        <lightning-button label="View" onclick={viewForm1} if:false={isUpdateAble} data-key={voucher.Id}
+                                            variant="brand" class="slds-m-around_medium" value={i}>
+                                        </lightning-button>
                                         <lightning-button label="Delete" onclick={deleteVoucher} if:true={isDeleteAble}
                                             data-key={voucher.Id} variant="destructive" value={i}></lightning-button>
                                     </div>
@@ -63,38 +45,11 @@
                                         </lightning-button>
                                         <lightning-button label="Delete" onclick={deleteVoucher} if:true={isDeleteAble}
                                             data-key={voucher.Id} variant="destructive" value={i}></lightning-button>
-
                                     </div>
 
                                 </td>
 
                             </tr>
-
-                            <!-- <div key={voucher}>
-                            <div class="slds-grid">
-                                <div class="slds-col slds-size_1-of-6">
-                                    {voucher.Name}
-                                </div>
-                                <div class="slds-col slds-size_1-of-6">
-                                    {voucher.Active__c}
-                                </div>
-                                <div class="slds-col slds-size_2-of-6">
-                                    {voucher.Certification__r.Name}
-                                </div>
-                                
-                                <div class="slds-col slds-size_2-of-6" >
-                                    <lightning-button label="Edit" onclick={editForm} if:true={isUpdateAble} if:false={$Browser.isPhone}
-                                        data-key={voucher.Id} variant="brand" class="slds-m-around_medium" value={i}>
-                                    </lightning-button>
-                                    <lightning-button label="Delete" onclick={deleteVoucher} if:true={isDeleteAble}
-                                        data-key={voucher.Id} variant="destructive" value={i}></lightning-button>
-
-                                </div>
-                            </div>
-                        </div> -->
-
-
-
                         </template>
 
                     </tbody>
@@ -109,21 +64,5 @@
                 </lightning-spinner>
             </div>
         </div>
-
-        <!-- <lightning-datatable key-field="id" show-row-number-column hide-checkbox-column data={vouchers}
-        columns={columnsOfVou} onrowaction={handleRowActions} >
-      </lightning-datatable> -->
-
-        <!-- <div class="slds-grid">
-            <div class="slds-col slds-size_1-of-3">
-                Column 1 content
-            </div>
-            <div class="slds-col slds-size_1-of-3">
-                Columns 2 content
-            </div>
-            <div class="slds-col slds-size_1-of-3">
-                Columns 3 content
-            </div>
-        </div> -->
     </div>
 </template>

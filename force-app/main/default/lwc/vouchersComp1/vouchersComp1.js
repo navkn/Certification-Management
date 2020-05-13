@@ -54,25 +54,42 @@ export default class VouchersComp1 extends LightningElement {
     }
 
     addNewVoucher(event) {
-        console.log(this.VouVal);
-        console.log(this.VouCost);
-        console.log(this.VouCert);
-        console.log(this.CertRecordId);
-        addvoucher({ VouValid: this.VouVal, VouCost: this.VouCost, VouCert: this.CertRecordId }).then(result => {
-            if (result == 'Voucher Added Successfully') {
-                //alert(result);
-                this.notify('Voucher Added Successfully', '', 'success');
-                this.closepopup();
-                var payload = {};
-                fireEvent(this.pageRef, 'refreshvouchers', payload);
-                // this.showCert = false; refreshApex(this.valueOfViewCertifications).then(val => { this.showCert = true; console.log('came'); }).catch(err => { console.log('error came'); this.showCert = true; });
-            }
+        // console.log(this.VouVal);
+        // console.log(this.VouCost);
+        // console.log(this.VouCert);
+        // console.log(this.CertRecordId);
+        const allValid = [...this.template.querySelectorAll('lightning-input')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        if (allValid) {
+            if (this.CertRecordId != undefined || this.CertRecordId != null) {
+                addvoucher({ VouValid: this.VouVal, VouCost: this.VouCost, VouCert: this.CertRecordId }).then(result => {
+                    if (result == 'Voucher Added Successfully') {
+                        //alert(result);
+                        this.notify('Voucher Added Successfully', '', 'success');
+                        this.closepopup();
+                        var payload = {};
+                        fireEvent(this.pageRef, 'refreshvouchers', payload);
+                        // this.showCert = false; refreshApex(this.valueOfViewCertifications).then(val => { this.showCert = true; console.log('came'); }).catch(err => { console.log('error came'); this.showCert = true; });
+                    }
 
-            else {
-                //alert(result);
-                this.notify('Failed to add voucher', result, 'error');
+                    else {
+                        //alert(result);
+                        this.notify('Failed to add voucher', result, 'error');
+                    }
+                });
             }
-        });
+            else {
+                //alert('Please select a Certification');
+                this.notify('Please select a Certification', '', 'error');
+            }
+        }
+        else {
+            //alert('Please review all errors');
+            this.notify('Please review all errors', '', 'error');
+        }
     }
 
     notify(title, message, variant) {

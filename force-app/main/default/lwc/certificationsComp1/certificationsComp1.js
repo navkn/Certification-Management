@@ -20,8 +20,8 @@ export default class CertificationsComp1 extends LightningElement {
 
     closepopup() {
         this.certflag = false;
-        this.CertCost=undefined;
-        this.CertName=undefined;
+        this.CertCost = undefined;
+        this.CertName = undefined;
     }
 
     @track CertName;
@@ -34,23 +34,35 @@ export default class CertificationsComp1 extends LightningElement {
     }
 
     addNewCertification(event) {
-        console.log(this.CertName);
-        console.log(this.CertCost);
-        addcertification({ CertName: this.CertName, CertCost: this.CertCost }).then(result => {
-            if (result == 'Certification Created Successfully') {
-                //alert(result);
-                this.notify('certification Added Successfully', '', 'success');
-                this.closepopup();
-                var payload = {};
-                fireEvent(this.pageRef, 'refreshcertificates', payload);
-                // this.showCert = false; refreshApex(this.valueOfViewCertifications).then(val => { this.showCert = true; console.log('came'); }).catch(err => { console.log('error came'); this.showCert = true; });
-            }
+        // console.log(this.CertName);
+        // console.log(this.CertCost);
+        const allValid = [...this.template.querySelectorAll('lightning-input')]
+            .reduce((validSoFar, inputCmp) => {
+                inputCmp.reportValidity();
+                return validSoFar && inputCmp.checkValidity();
+            }, true);
+        if (allValid) {
+            addcertification({ CertName: this.CertName, CertCost: this.CertCost }).then(result => {
+                if (result == 'Certification Created Successfully') {
+                    //alert(result);
+                    this.notify('certification Added Successfully', '', 'success');
+                    this.closepopup();
+                    var payload = {};
+                    fireEvent(this.pageRef, 'refreshcertificates', payload);
+                    // this.showCert = false; refreshApex(this.valueOfViewCertifications).then(val => { this.showCert = true; console.log('came'); }).catch(err => { console.log('error came'); this.showCert = true; });
+                }
 
-            else {
-                //alert(result);
-                this.notify('Failed to add certification', result, 'error');
-            }
-        });
+                else {
+                    //alert(result);
+                    this.notify('Failed to add certification', result, 'error');
+                }
+            });
+
+        }
+        else {
+            //alert('Please review all errors');
+            this.notify('Please review all errors', '', 'error');
+        }
     }
 
     notify(title, message, variant) {

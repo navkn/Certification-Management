@@ -9,7 +9,7 @@ import updVoucher from '@salesforce/apex/CertificationManagementComponentsHandle
 export default class VouchersComp3 extends LightningElement {
 
 
-    @track isEdit = true;
+    @track isEdit = false;
 
     @wire(CurrentPageReference) pageRef;
     todaysDate;
@@ -24,7 +24,7 @@ export default class VouchersComp3 extends LightningElement {
         registerListener('editvoucher', this.handle1, this);
 
     }
-    
+
     disconnectedCallback() {
         unregisterAllListeners(this);
     }
@@ -56,24 +56,19 @@ export default class VouchersComp3 extends LightningElement {
         this.recordId = this.voucher.Id;
         this.isActive = this.voucher.Active__c;
         console.log(this.isActive);
-        if (this.isActive == false) {
-            this.isEditable = false;
-        }
-        else {
-            this.isEditable = true;
-        }
+        
         if (heavyLoad.action == 'view') {
             this.isEdit = false;
-            console.log(this.isEdit);
+            
         }
-        if (heavyLoad.action == 'edit') {
+        else if (heavyLoad.action == 'edit' && this.isActive == true) {
             this.isEdit = true;
-            console.log(this.isEdit);
         }
+        console.log(this.isEdit);
 
         //autoscroll
         var scrollOptions = {
-            //left: 0,
+            left: 0,
             top: 0,
             behavior: 'smooth'
         }
@@ -96,21 +91,39 @@ export default class VouchersComp3 extends LightningElement {
         console.log(this.CertRecordId);
         console.log(this.vouVal);
         if (this.isActive == true) {
-            updVoucher({ recId: this.recordId, vouCost: this.vouCost, vouValidity: this.vouVal, vouCert: this.CertRecordId }).then((result) => {
-                if (result == "Voucher updated Successfully") {
-                    //refreshApex(this.valueOfViewCertifications);
-                    var payload = {};
-                    fireEvent(this.pageRef, 'refreshvouchers', payload);
-                    this.handleCancel(payload);
-                    this.notify('Voucher updated Successfully', '', 'success');
-                    this.voucher = undefined;
-                } else {
-                    this.notify('Failed to update certificate', result, 'error');
-                };
-            });
+            const allValid = [...this.template.querySelectorAll('lightning-input')]
+                .reduce((validSoFar, inputCmp) => {
+                    inputCmp.reportValidity();
+                    return validSoFar && inputCmp.checkValidity();
+                }, true);
+            if (allValid) {
+                if (this.CertRecordId != undefined || this.CertRecordId != null) {
+
+                    updVoucher({ recId: this.recordId, vouCost: this.vouCost, vouValidity: this.vouVal, vouCert: this.CertRecordId }).then((result) => {
+                        if (result == "Voucher updated Successfully") {
+                            //refreshApex(this.valueOfViewCertifications);
+                            var payload = {};
+                            fireEvent(this.pageRef, 'refreshvouchers', payload);
+                            this.handleCancel(payload);
+                            this.notify('Voucher updated Successfully', '', 'success');
+                            this.voucher = undefined;
+                        } else {
+                            this.notify('Failed to update certificate', result, 'error');
+                        };
+                    });
+                }
+                else {
+                    //alert('Please select a Certification');
+                    this.notify('Please select a Certification', '', 'error');
+                }
+            }
+            else {
+                //alert('Please review all errors');
+                this.notify('Please review all errors', '', 'error');
+            }
         }
         else {
-            this.notify('A inactive Voucher cannot be updated', '', 'error');
+            this.notify('A inactive(Assigned) Voucher cannot be updated', '', 'error');
         }
     }
     @track vouVal;
