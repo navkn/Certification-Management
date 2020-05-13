@@ -1,0 +1,61 @@
+<template>
+    <div if:false={firstTime}>
+        <div if:true={showCR}>
+            <div class="slds-scrollable">
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                    <thead class="slds-text-title--caps slds-m-around_medium">
+                        <tr>
+                            <th title="Request ID" class="slds-truncate"> Request ID</th>
+                            <th title="Employee name" class="slds-truncate">Employee name</th>
+                            <th title="Request Certification" class="slds-truncate">Request Certification</th>
+                            <th title="Status" class="slds-truncate">Status</th>
+                            <!-- <th title="Due Date" class="slds-truncate">Due Date</th> -->
+                            <th title="Action Set" class="slds-truncate">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <template for:each={requests} for:item="request" for:index='i'>
+
+                            <tr key={request}>
+
+                                <td data-label="Request ID" onclick={viewForm}>{request.Name}</td>
+                                <td data-label="Employee name" onclick={viewForm}>{request.Employee__r.Name}</td>
+                                <td data-label="Request Certification" onclick={viewForm}>
+                                    {request.Certification__r.Name}
+                                </td>
+                                <td data-label="Status" onclick={viewForm}>{request.Status__c}
+                                </td>
+                                <!-- <td data-label="Due Date">{request.Due_Date__c}
+                        </td> -->
+                                <td data-label="Action Set">
+                                    <lightning-button label="Edit" onclick={editRequest} data-key={request.Id}
+                                        variant="brand" class="slds-m-around_medium" value={i}>
+                                    </lightning-button>
+                                    <lightning-button label="Delete" if:true={isDeleteAble} onclick={deleteRequest}
+                                        data-key={request.Id} variant="destructive" class="slds-m-around_medium"
+                                        value={i}>
+                                    </lightning-button>
+                                </td>
+
+                            </tr>
+
+
+                        </template>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div if:false={showCR}>
+            <div style=" position: relative;
+                  background-color: #16325c;
+                  height: 200px;">
+                <lightning-spinner alternative-text="Loading" size="medium" variant="inverse">
+                </lightning-spinner>
+            </div>
+        </div>
+    </div>
+</template>

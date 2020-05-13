@@ -1,0 +1,77 @@
+<template>
+  <lightning-card title="Requests Which are yet to Approve or Reject" icon-name="action:submit_for_approval">
+  </lightning-card>
+  <lightning-button label="Refresh" class="slds-m-around_medium" variant="brand" onclick={refreshDrafts}></lightning-button>
+
+  <div if:true={showDrafts}>
+    <template for:each={Requests} for:item="request" for:index="i">
+     
+      <div class="slds-m-around_medium" key={request}>
+        <lightning-card title={request.Name} variant="base">
+
+          <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+
+              <p>Employee Name : {request.Employee__r.Name} </p><br />
+              <p>Comments : {request.Comments__c} </p>
+
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_medium">
+
+              <p> Certification Name : {request.Certification__r.Name} </p><br />
+              <p> Due Date : {request.Due_Date__c} </p>
+
+            </div>
+
+          </div>
+          <div slot="footer">
+            <lightning-button label="Approve" class="slds-m-around_medium" value={i} variant="success" onclick={approvereq}></lightning-button>
+            <lightning-button label="Reject" class="slds-m-around_medium" value={i} variant="destructive" onclick={rejectreq}></lightning-button>
+
+          </div>
+        </lightning-card>
+      </div>
+    </template>
+  </div>
+  <div if:false={showDrafts}>
+    <div style=" position: relative;
+    background-color: #16325c;
+    height: 200px;">
+      <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+    </div>
+  </div>
+
+  <template if:true={flagged}>
+    <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content" aria-modal="true"
+      aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header slds-modal__header_empty">
+          <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true"></svg>
+            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Close</span>
+          </button> -->
+          <p>Comments</p>
+        </header>
+
+
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+          <lightning-input label="Comments" onchange={saveComment} value={comment} required={selectedRejection}
+            message-when-value-missing="Please enter your Comment!" type="String"></lightning-input>
+        </div>
+
+        <footer class="slds-modal__footer">
+          <button class="slds-button slds-button_neutral" onclick={closepopup}>
+            Close
+          </button>
+          <button class="slds-button slds-button_neutral" onclick={AddComment}>
+            Save
+          </button>
+
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>

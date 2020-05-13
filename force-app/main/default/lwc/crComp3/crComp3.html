@@ -1,0 +1,157 @@
+<template>
+
+    <div if:true={request}>
+        <div id="content">
+            <div if:true={isEditable}>
+                <div if:true={isEdit}>
+                    <lightning-card title="Edit Request" class="slds-m-horizontal_small">
+
+                        <lightning-input class="slds-m-horizontal_small" label="Request ID" value={crID} required
+                            read-only='true'>
+                        </lightning-input>
+
+                        <div class="slds-form-element__control slds-m-horizontal_small">
+                            <div class="slds-select_container">
+                                <p>Status</p>
+                                <select class="slds-select" onchange={crStatusChange} disabled={isPicklistDisabled}
+                                    required={isAttributeRequired}>
+                                    <option value={crStatus}>{crStatus}</option>
+                                    <template for:each={options} for:item="option">
+                                        <option key={option.label} class="uiInputSelectOption" value={option.value}>
+                                            {option.value}</option>
+                                    </template>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <lightning-input class="slds-m-horizontal_small" label="Request Certification" value={crCert}
+                            type="String" required read-only="true"></lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Employee name" value={crEmp}
+                            type="String" required read-only="true"></lightning-input>
+                        <div if:true={isStatusNone}>
+                            <lightning-input class="slds-m-horizontal_small" label="Due Date" value={crVal} required
+                                min={yesterdayDate} type='date' id="DueDate" onblur={crValChange}
+                                message-when-range-underflow="Enter atleast Today's date">
+                            </lightning-input>
+
+                        </div>
+                        <div if:false={isStatusNone}>
+
+                            <lightning-input class="slds-m-horizontal_small" label="Due Date" value={crVal}
+                                read-only="true">
+                            </lightning-input>
+                        </div>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Voucher Code" value={crVouCode}
+                            type="String" read-only="true"></lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Comments" value={crComm} type="String"
+                            required={isRequiredComm} onchange={crCommChange}
+                            message-when-value-missing={dynamicMessage}></lightning-input>
+
+                        <div slot="footer">
+                            <lightning-button class="slds-m-around_medium" label="Update" value={i} variant="success"
+                                onclick={handleUpdate}></lightning-button>
+                            <lightning-button class="slds-m-around_medium" label="Cancel" value={i}
+                                variant="destructive" onclick={handleCancel}></lightning-button>
+                        </div>
+
+                    </lightning-card>
+                </div>
+                <div if:false={isEdit}>
+
+                    <lightning-card title="View Certification Request" class="slds-m-horizontal_small">
+                        <lightning-input class="slds-m-horizontal_small" label="Request ID" value={crID}
+                            read-only="true" required>
+                        </lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Status" value={crStatus} required
+                            read-only="true">
+                        </lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Request Certification" value={crCert}
+                            type="String" required read-only="true"></lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Employee name" value={crEmp}
+                            type="String" required read-only="true"></lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Voucher Code" value={crVouCode}
+                            type="String" required read-only="true"></lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Due Date" value={crVal} required
+                            read-only="true" type="date">
+                        </lightning-input>
+
+                        <lightning-input class="slds-m-horizontal_small" label="Comments" value={crComm} type="String"
+                            required read-only="true"></lightning-input>
+
+                        <div slot="footer">
+                            <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Edit"
+                                variant="brand" onclick={handleEditClicked}></lightning-button>
+                            <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Cancel"
+                                variant="normal" onclick={handleCancelClicked}></lightning-button>
+                        </div>
+                        <!-- <div slot="title">
+                       <b>View Certification Request</b>
+                    </div> -->
+
+
+                    </lightning-card>
+                </div>
+            </div>
+            <div if:false={isEditable}>
+
+                <lightning-card title="View Certification Request" class="slds-m-horizontal_small">
+                    <lightning-input class="slds-m-horizontal_small" label="Request ID" value={crID} read-only="true"
+                        required>
+                    </lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Status" value={crStatus} required
+                        read-only="true">
+                    </lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Request Certification" value={crCert}
+                        type="String" required read-only="true"></lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Employee name" value={crEmp} type="String"
+                        required read-only="true"></lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Code" value={crVouCode}
+                        type="String" required read-only="true"></lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Due Date" value={crVal} required
+                        read-only="true" type="date">
+                    </lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Comments" value={crComm} type="String"
+                        required read-only="true"></lightning-input>
+                    <div slot="footer">
+                        <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Cancel"
+                            variant="normal" onclick={handleCancelClicked}></lightning-button>
+                    </div>
+                </lightning-card>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- <c-certlookupcomponent
+      object-name="Certification__c"
+      field-name="Name"
+      label="Certification"
+      parentidfield="Certification__c"
+      onselect={handleAutoSelect}
+      iconname="standard:account"
+      provide-record={VouCert}
+    ></c-certlookupcomponent>
+  
+    <lightning-input
+      label="Voucher Comments"
+      value={VouComm}
+      type="Text"
+      onchange={VouCommChange}
+    ></lightning-input> -->
+</template>

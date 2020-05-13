@@ -1,0 +1,129 @@
+<template>
+
+    <div if:true={voucher}>
+        <div if:true={isEditable}>
+            <div if:true={isEdit}>
+                <lightning-card title="Edit Voucher" class="slds-m-around_medium">
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Cost" value={vouCost}
+                        type="Currency" required onchange={VouCostChange}>
+                    </lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Code" value={vouName} type="String"
+                        required read-only="true"></lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Validity" type="date" value={vouVal} required min={yesterdayDate}
+                    message-when-range-underflow="Enter atleast Today's date"  onblur={VouValChange}>
+                    </lightning-input>
+
+                    <!-- <lightning-input class="slds-m-horizontal_small" label="Voucher Certification" value={vouCert}
+                        required onchange={VouCertChange}>
+                    </lightning-input> -->
+
+                    <c-certlookupcomponent object-name="Certification__c" field-name="Name" label="Certification"
+                        predefined-record={jsonVouCert} parentidfield="Certification__c" onselect={handleAutoSelect}
+                        iconname="standard:account">
+                    </c-certlookupcomponent>
+
+                    <!-- <lightning-input class="slds-m-horizontal_small" label="Voucher Active" value={isActive} required
+                        type="boolean" read-only="true">
+                    </lightning-input> -->
+                    <div class="slds-m-horizontal_small">
+                        <p>Voucher Active : {isActive}</p>
+                    </div>
+                    <div slot="footer">
+                        <lightning-button class="slds-m-around_medium" label="Update" value={i} variant="success"
+                            onclick={handleUpdate}></lightning-button>
+                        <lightning-button class="slds-m-around_medium" label="Cancel" value={i} variant="destructive"
+                            onclick={handleCancel}></lightning-button>
+                    </div>
+
+                </lightning-card>
+            </div>
+            <div if:false={isEdit}>
+
+                <lightning-card title="View Certification" class="slds-m-around_medium">
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Cost" value={vouCost}
+                        type="Currency" required onchange={VouCostChange} read-only="true">
+                    </lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Code" value={vouName} type="String"
+                        required read-only="true"></lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Validity" value={vouVal} required
+                        onchange={VouValChange} read-only="true">
+                    </lightning-input>
+
+                    <lightning-input class="slds-m-horizontal_small" label="Voucher Certification" value={vouCert}
+                        required onchange={VouCertChange} read-only="true">
+                    </lightning-input>
+
+                    <!-- <lightning-input class="slds-m-horizontal_small" label="Voucher Active" value={isActive} required
+                        read-only="true">
+                    </lightning-input> -->
+                    <div class="slds-m-horizontal_small">
+                        <p>Voucher Active : {isActive}</p>
+                    </div>
+                    <div slot="footer">
+                        <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Edit" variant="brand"
+                            onclick={handleEditClicked}></lightning-button>
+                    </div>
+
+                </lightning-card>
+            </div>
+        </div>
+        <div if:false={isEditable}>
+
+            <lightning-card title="View Certification" class="slds-m-around_medium">
+
+                <lightning-input class="slds-m-horizontal_small" label="Voucher Cost" value={vouCost} type="Currency"
+                    required onchange={VouCostChange} read-only="true">
+                </lightning-input>
+
+                <lightning-input class="slds-m-horizontal_small" label="Voucher Code" value={vouName} type="String"
+                    required read-only="true"></lightning-input>
+
+                <lightning-input class="slds-m-horizontal_small" label="Voucher Validity" value={vouVal} required
+                    onchange={VouValChange} read-only="true">
+                </lightning-input>
+
+                <lightning-input class="slds-m-horizontal_small" label="Voucher Certification" value={vouCert} required
+                    onchange={VouCertChange} read-only="true">
+                </lightning-input>
+
+                <!-- <lightning-input class="slds-m-horizontal_small" label="Voucher Active" value={isActive} required
+                    read-only="true">
+                </lightning-input> -->
+                <div class="slds-m-horizontal_small">
+                    <p>Voucher Active : {isActive}</p>
+                </div>
+
+                <div slot="footer">
+                    <lightning-button if:true={isEditable} class="slds-m-around_medium" label="Edit" variant="brand"
+                        onclick={handleEditClicked}></lightning-button>
+                </div>
+
+
+            </lightning-card>
+        </div>
+
+
+    </div>
+
+    <!-- <c-certlookupcomponent
+      object-name="Certification__c"
+      field-name="Name"
+      label="Certification"
+      parentidfield="Certification__c"
+      onselect={handleAutoSelect}
+      iconname="standard:account"
+      provide-record={VouCert}
+    ></c-certlookupcomponent>
+  
+    <lightning-input
+      label="Voucher Comments"
+      value={VouComm}
+      type="Text"
+      onchange={VouCommChange}
+    ></lightning-input> -->
+</template>

@@ -1,0 +1,30 @@
+<template>
+
+    <lightning-card title="Requests Which are yet to Submit for Approval" icon-name="action:submit_for_approval">
+    </lightning-card>
+    <lightning-button class="slds-m-around_medium" label="Refresh" variant="brand" onclick={RecallWiredData}></lightning-button>
+
+    <template for:each={Requests} for:item="request" for:index="i">
+        <div class="slds-m-around_medium" key={request}>
+            <div if:true={showNoneReq}>
+                <lightning-card title={request.Name} variant="base">
+
+                    <p>Employee Name : {request.Employee__r.Name} </p>
+                    <p> Certification Name : {request.Certification__r.Name} </p>
+                    <p>Due Date :{request.Due_Date__c} </p>
+                    <div slot="footer">
+                        <lightning-button label="Submit for approval" variant="brand" value={i} onclick={submitreq}>
+                        </lightning-button>
+                    </div>
+                </lightning-card>
+            </div>
+            <div if:false={showNoneReq}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

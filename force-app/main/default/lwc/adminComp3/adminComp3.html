@@ -1,0 +1,123 @@
+<template>
+    <lightning-tabset>
+        <lightning-tab label="Approved" onactive={ApprovedClicked}>
+            <lightning-card title="Requests Which are Approved" icon-name="action:approval">
+            </lightning-card>
+            <div if:true={showApproved}>
+                <template for:each={Requests1} for:item="request1" for:index="i">
+
+                    <div class="slds-m-around_medium" key={request1}>
+                        <lightning-card title={request1.Name} variant="base">
+
+                            <p>Employee Name : {request1.Employee__r.Name} </p>
+                            <p> Certification Name : {request1.Certification__r.Name} </p>
+                            <p>Due Date :{request1.Due_Date__c} </p>
+                            <p> Comments : {request1.Comments__c} </p>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+            <div if:false={showApproved}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Rejected" onactive={RejectedClicked}>
+            <lightning-card title="Requests Which are Rejected" icon-name="action:reject">
+            </lightning-card>
+            <div if:true={showRejected}>
+                <template for:each={Requests2} for:item="request2" for:index="i">
+
+                    <div class="slds-m-around_medium" key={request2}>
+                        <lightning-card title={request2.Name} variant="base">
+
+                            <p>Employee Name : {request2.Employee__r.Name} </p>
+                            <p> Certification Name : {request2.Certification__r.Name} </p>
+                            <p>Due Date :{request2.Due_Date__c} </p>
+                            <p> Comments : {request2.Comments__c} </p>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+            <div if:false={showRejected}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Vouchers Assigned" onactive={AssignedClicked}>
+            <lightning-card title="Requests Which are Assigned" icon-name="action:update_status">
+            </lightning-card>
+            <lightning-button label="click to Refresh" onclick={RefreshAssigned}></lightning-button>
+            <div if:true={showAssigned}>
+                <template for:each={Requests3} for:item="request3" for:index="i">
+
+                    <div class="slds-m-around_medium" key={request3}>
+                        <lightning-card title={request3.Name} variant="base">
+                            <p>Employee Name : {request3.Employee__r.Name} </p>
+                            <p> Certification Name : {request3.Certification__r.Name} </p>
+                            <p>Due Date :{request3.Due_Date__c} </p>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+            <div if:false={showAssigned}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <template>
+    <lightning-card title="Requests Which are Approved" icon-name="custom:custom14">
+    </lightning-card>
+
+    <template key={abcd}>
+        <lightning-tabset>
+            <lightning-tab label="Approved Requests">
+                <p>Hellooo</p> -->
+<!-- <template for:each={Requests} for:item="request" for:index="i">
+                    <lightning-card key={abc}>
+                        <p>Request Id : {request.Name} Employee Name : {request.Employee__c} Certification Name : {request.Certification__c} </p>
+                        <p> Status : {request.Status__c} Voucher :  {request.Voucher__c}  Comments : {request.Comments__c}  </p>
+                    
+                    </lightning-card>
+                </template> -->
+<!-- </lightning-tab>
+            <lightning-tab label="Rejected Requests" title="2nd tab extended title"> -->
+<!-- <template for:each={Requests1} for:item="request1" for:index="i">
+                    <lightning-card key={abc1}>
+                        <p>Request Id : {request1.Name} Employee Name : {request1.Employee__c} Certification Name : {request1.Certification__c} </p>
+                        <p> Status : {request1.Status__c} Voucher :  {request1.Voucher__c}  Comments : {request1.Comments__c}  </p>
+                   
+
+                    </lightning-card>
+                </template> -->
+<!-- </lightning-tab>
+        <lightning-tab label="Rejected Requests">
+            Second tab
+        </lightning-tab>
+        </lightning-tabset>            
+    </template>
+</template> -->

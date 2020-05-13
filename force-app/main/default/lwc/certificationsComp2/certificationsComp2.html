@@ -1,0 +1,57 @@
+<template>
+    <div if:false={firstTime}>
+        <div if:true={showCertifications}>
+            <div class="slds-scrollable">
+
+                <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                    <thead class="slds-text-title--caps slds-m-around_medium" style="font-size:medium">
+                        <tr>
+                            <th title="Certification Name" class="slds-truncate">Certification Name</th>
+                            <th title="Certification ID" class="slds-truncate">Certification ID</th>
+                            <th title="Certification Cost" class="slds-truncate">Certification Cost</th>
+                            <th title="Action Set" class="slds-truncate" if:true={isUpdateAble}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:small">
+
+                        <template for:each={certifications} for:item="certification" for:index='i'>
+
+                            <tr key={certification}>
+
+                                <td data-label="Certification Name" onclick={viewForm}>{certification.Name}</td>
+                                <td data-label="Certification ID" onclick={viewForm}>{certification.Certification_ID__c}
+                                </td>
+                                <td data-label="Certification Cost" onclick={viewForm}>
+                                    {certification.Certification_Cost__c}
+                                </td>
+
+                                <td data-label="Action Set" if:true={isUpdateAble}>
+
+                                    <lightning-button label="Edit" onclick={editForm} data-key={certification.Id}
+                                        variant="brand" class="slds-m-around_medium" value={i}>
+                                    </lightning-button>
+                                    <lightning-button label="Delete" onclick={deleteCertificateForm}
+                                        data-key={certification.Id} variant="destructive" value={i}></lightning-button>
+
+                                </td>
+
+                            </tr>
+
+
+                        </template>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div if:false={showCertifications}>
+            <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                <lightning-spinner alternative-text="Loading" size="medium" variant="inverse">
+                </lightning-spinner>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,97 @@
+<template>
+    <lightning-tabset>
+        <lightning-tab label="Assigned Requests" onactive={AssignedClicked}>
+            <lightning-card title="Requests Which are Yet to Update Exam Results" icon-name="custom:custom14">
+            </lightning-card>
+            <lightning-button label="click to Refresh" onclick={RefreshAssigned}></lightning-button>
+            <div if:true={showAssigned}>
+                <template for:each={Requests1} for:item="request1" for:index="i">
+                    <div class="slds-m-around_medium" key={request1}>
+                        <lightning-card title={request1.Name}>
+                            <p> Employee Name : {request1.Employee__r.Name} </p>
+                            <p> Certification Name : {request1.Certification__r.Name} </p>
+                            <p> Voucher : {request1.Voucher__r.Name} </p>
+                            <p> Comments : {request1.Comments__c} </p>
+                            <div slot='footer'>
+                                <lightning-button label="Passed" class="slds-m-around_medium" value={i} variant="success" onclick={passedreq}>
+                                </lightning-button>
+                                <lightning-button label="Failed" class="slds-m-around_medium" value={i} variant="destructive" onclick={failedreq}></lightning-button>
+                            </div>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+            <div if:false={showAssigned}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Passed Requests" onactive={PassedClicked}>
+            <lightning-card title="Requests Which are Passed" icon-name="custom:custom14">
+            </lightning-card>
+            <div if:true={showPassed}>
+                <template for:each={Requests2} for:item="request2" for:index="i">
+                    <div class="slds-m-around_medium" key={request2}>
+                        <lightning-card title={request2.Name}>
+                            <p> Employee Name : {request2.Employee__r.Name} </p>
+                            <p> Certification Name : {request2.Certification__r.Name} </p>
+                            <p> Voucher : {request2.Voucher__r.Name} </p>
+                            <p> Comments : {request2.Comments__c} </p>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+            <div if:false={showPassed}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </lightning-tab>
+        <lightning-tab label="Failed Requests" onactive={FailedClicked}>
+            <lightning-card title="Requests Which are Failed" icon-name="custom:custom14">
+            </lightning-card>
+            <div if:true={showFailed}>
+                <template for:each={Requests3} for:item="request3" for:index="i">
+                    <div class="slds-m-around_medium" key={request3}>
+                        <lightning-card title={request3.Name}>
+                            <p> Employee Name : {request3.Employee__r.Name} </p>
+                            <p> Certification Name : {request3.Certification__r.Name} </p>
+                            <p> Voucher : {request3.Voucher__r.Name} </p>
+                            <p> Comments : {request3.Comments__c} </p>
+                        </lightning-card>
+                    </div>
+                </template>
+            </div>
+            <div if:false={showFailed}>
+                <div style=" position: relative;
+                background-color: #16325c;
+                height: 200px;">
+                    <lightning-spinner alternative-text="Loading" size="medium" variant="inverse"></lightning-spinner>
+                </div>
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+</template>
+
+
+<!-- <template>
+    <lightning-card title="Requests Which are Assigned" icon-name="custom:custom14">
+    </lightning-card>
+
+    <template for:each={Requests} for:item="request" for:index="i">
+        <lightning-card key={abc}>
+            <p>Request Id : {request.Name} Employee Name : {request.Employee__c} Certification Name : {request.Certification__c} </p>
+            <p> Status : {request.Status__c} Voucher :  {request.Voucher__c}  Comments : {request.Comments__c}  </p>
+            <lightning-button-group>
+                <lightning-button label="Passed" value={i} variant="brand" onclick={passedreq}></lightning-button>
+                <lightning-button label="Failed" value={i} onclick={failedreq}></lightning-button>
+                
+            </lightning-button-group>
+        </lightning-card>
+    </template>
+</template> -->

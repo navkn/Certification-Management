@@ -1,0 +1,68 @@
+<template>
+
+
+    <div class="slds-page-header">
+        <lightning-card>
+            <h4 slot="title" class="text">
+                <lightning-icon icon-name="action:new_child_case" class="slds-m-right_medium" size="medium">
+
+                </lightning-icon>
+                Certification Requests
+            </h4>
+            <lightning-button if:true={isAddAble} slot="actions" label="New Certification Request" onclick={reqform}>
+            </lightning-button>
+            <lightning-combobox class="slds-m-bottom_medium" value={value} placeholder="Select Progress"
+                options={options} slot="actions" onchange={handleStatusOptions}></lightning-combobox>
+        </lightning-card>
+    </div>
+    <template if:true={isAddAble}>
+        <div if:true={reqflag}>
+            <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content"
+                aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+              </button> -->
+                        <p>New Certification Request</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                        <!-- <lightning-input label="Voucher Validity" value={crVal} type="date" required
+                            onchange={crValChange}>
+                        </lightning-input>
+                        <lightning-input label="Voucher Cost" value={crCost} type="currency" required
+                            onchange={crCostChange}>
+                        </lightning-input>
+                        <c-certlookupcomponent object-name="Certification__c" field-name="Name" label="Certification"
+                            parentidfield="Certification__c" onselect={handleAutoSelect} iconname="standard:account">
+                        </c-certlookupcomponent> -->
+
+
+                        <c-certlookupcomponent object-name="Employee__c" field-name="Name" label="Employee"
+                            parentidfield="Employee__c" onselect={handleAutoSelect1} iconname="standard:contact">
+                        </c-certlookupcomponent>
+                        <c-certlookupcomponent object-name="Certification__c" field-name="Name" label="Certification"
+                            parentidfield="Certification__c" onselect={handleAutoSelect} iconname="standard:drafts">
+                        </c-certlookupcomponent>
+                        <lightning-input label="Request Due Date" type="date" required min={yesterdayDate}
+                            message-when-range-underflow="Enter atleast Today's date" onblur={ReqDueDateChange}>
+                        </lightning-input>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closepopup}>
+                            Cancel
+                        </button>
+                        <button class="slds-button slds-button_brand" onclick={addreq}>
+                            Add
+                        </button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>

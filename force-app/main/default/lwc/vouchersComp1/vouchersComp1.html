@@ -1,0 +1,55 @@
+<template>
+
+
+    <div class="slds-page-header">
+        <lightning-card>
+            <h4 slot="title" class="text">
+                <lightning-icon icon-name="action:new_campaign" class="slds-m-right_medium" size="medium">
+
+                </lightning-icon>
+                Vouchers
+            </h4>
+            <lightning-button if:true={isAddAble} slot="actions" label="Add New Voucher" onclick={addVou}>
+            </lightning-button>
+        </lightning-card>
+    </div>
+    <template if:true={isAddAble}>
+        <div if:true={vouflag}>
+            <section role="dialog" tabindex="-1" aria-label="Meaningful description of the modal content"
+                aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header slds-modal__header_empty">
+                        <!-- <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+              </button> -->
+                        <p>New Voucher form</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+                        <lightning-input label="Voucher Validity" value={VouVal} type="date" required
+                            min={yesterdayDate} message-when-range-underflow="Enter atleast Today's date"
+                            onblur={VouValChange}>
+                        </lightning-input>
+                        <lightning-input label="Voucher Cost" value={VouCost} type="number" formatter="currency"
+                            required onchange={VouCostChange}>
+                        </lightning-input>
+                        <c-certlookupcomponent object-name="Certification__c" field-name="Name" label="Certification"
+                            parentidfield="Certification__c" onselect={handleAutoSelect} iconname="standard:account">
+                        </c-certlookupcomponent>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closepopup}>
+                            Cancel
+                        </button>
+                        <button class="slds-button slds-button_brand" onclick={addNewVoucher}>
+                            Add
+                        </button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>
